@@ -1,22 +1,21 @@
-
-// To connect with your mongoDB database
 const mongoose = require('mongoose');
-const uri = process.env.MONGODB_URI;
 
-mongoose.connect(uri, {
+mongoose.set('strictQuery', true)
+
+mongoose.connect('mongodb+srv://atulanand1811:my%40portfolio%40db%402024@pf-db.2l7lwqb.mongodb.net/?retryWrites=true&w=majority&appName=pf-db', {
 	dbName: 'portfolio-db',
 	useNewUrlParser: true,
 	useUnifiedTopology: true
-}, err => err ? console.log(err) : 
+}, err => err ? console.log(err) :
 	console.log('Connected to portfolio-db database'));
 
 // Schema for users of app
 const UserDetails = new mongoose.Schema({
-    portfolioId: {
-        type: String,
-        required: true,
-        unique: true
-    },
+	portfolioId: {
+		type: String,
+		required: true,
+		unique: true
+	},
 	image: {
 		type: String,
 		required: true,
@@ -37,40 +36,40 @@ const UserDetails = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-    skills: {
+	skills: {
 		type: String,
 		required: true,
 	},
-    linkedIn: {
+	linkedIn: {
 		type: String,
 		required: true,
 	},
-    github: {
+	github: {
 		type: String,
 		required: true,
 	},
 	emailId: {
 		type: String,
 		required: true,
-	}, 
+	},
 	works: [{
-        name: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        },
-        techstack: {
-            type: String,
-            required: true
-        },
-        url: {
-            type: String,
-            required: false
-        }
-    }],
+		name: {
+			type: String,
+			required: true
+		},
+		description: {
+			type: String,
+			required: true
+		},
+		techstack: {
+			type: String,
+			required: true
+		},
+		url: {
+			type: String,
+			required: false
+		}
+	}],
 	experience: [{
 		organization: {
 			type: String,
@@ -80,7 +79,7 @@ const UserDetails = new mongoose.Schema({
 			type: String,
 			required: true
 		},
-		projects : [{
+		projects: [{
 			name: {
 				type: String,
 				required: false
@@ -93,7 +92,7 @@ const UserDetails = new mongoose.Schema({
 				type: String,
 				required: true
 			},
-			techstack : {
+			techstack: {
 				type: String,
 				required: true
 			}
@@ -114,7 +113,7 @@ app.get("/", (req, resp) => {
 	resp.send("App is Working");
 	// You can check backend is working or not by 
 	// entering http://loacalhost:5000
-	
+
 	// If you see App is working means
 	// backend working properly
 });
@@ -122,17 +121,17 @@ app.get("/", (req, resp) => {
 app.post("/register", async (req, resp) => {
 	try {
 		const user = new User(req.body);
-        console.log(user.userName);
-        let name = user.userName.split(' ').join('-').toLowerCase();
-        let characters = "abcdefghiklmnopqrstuvwxyz123467890";
-        let lenString = 14;
-        let randomstring = '';
-        for (let i = 0; i < lenString; i++) {
-            let rnum = Math.floor(Math.random() * characters.length);
-            randomstring += characters.substring(rnum, rnum + 1);
-        }
-        let portfolioId = name+"-"+randomstring;
-        user.portfolioId=portfolioId;
+		console.log(user.userName);
+		let name = user.userName.split(' ').join('-').toLowerCase();
+		let characters = "abcdefghiklmnopqrstuvwxyz123467890";
+		let lenString = 14;
+		let randomstring = '';
+		for (let i = 0; i < lenString; i++) {
+			let rnum = Math.floor(Math.random() * characters.length);
+			randomstring += characters.substring(rnum, rnum + 1);
+		}
+		let portfolioId = name + "-" + randomstring;
+		user.portfolioId = portfolioId;
 		let result = await user.save();
 		result = result.toObject();
 		if (result) {
@@ -150,13 +149,13 @@ app.post("/register", async (req, resp) => {
 
 app.get('/user/:id', async (req, resp) => {
 
-    let portfolioId = req.params.id;
-    console.log(portfolioId);
-    User.find({portfolioId: portfolioId}, function (err, user) {
-        if (err) {
-            resp.send(err);
-        }
-        resp.json(user);
-    });
-	
+	let portfolioId = req.params.id;
+	console.log(portfolioId);
+	User.find({ portfolioId: portfolioId }, function (err, user) {
+		if (err) {
+			resp.send(err);
+		}
+		resp.json(user);
+	});
+
 });
