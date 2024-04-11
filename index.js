@@ -162,5 +162,5 @@ app.get('/user/:id', async (req, resp) => {
     });
 	
 });
-app.use("/.netlify/functions/app", router);
+app.use("/.netlify/src/api", router);
 module.exports.handler = serverless(app);
