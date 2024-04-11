@@ -160,4 +160,3 @@ app.get('/user/:id', async (req, resp) => {
     });
 	
 });
-app.listen(5000);
