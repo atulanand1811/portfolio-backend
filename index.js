@@ -105,9 +105,7 @@ User.createIndexes();
 
 // For backend and express
 const express = require('express');
-const serverless = require("serverless-http");
 const app = express();
-const router = express.Router();
 const cors = require("cors");
 app.use(express.json());
 app.use(cors());
@@ -162,5 +160,4 @@ app.get('/user/:id', async (req, resp) => {
     });
 	
 });
-app.use("/.netlify/src/api", router);
-module.exports.handler = serverless(app);
+app.listen(5000);
