@@ -1,9 +1,9 @@
-// Code for mongoose config in backend
-// Filename - backend/index.js
 
 // To connect with your mongoDB database
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://atulanand1811:my%40portfolio%40db%402024@pf-db.2l7lwqb.mongodb.net/?retryWrites=true&w=majority&appName=pf-db', {
+const uri = process.env.MONGODB_URI;
+
+mongoose.connect(uri, {
 	dbName: 'portfolio-db',
 	useNewUrlParser: true,
 	useUnifiedTopology: true
